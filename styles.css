@@ -13,7 +13,7 @@ h1 {
     grid-template-columns: repeat(8, 60px);
     grid-template-rows: repeat(8, 60px);
     gap: 2px;
-    width: 484px;
+    width: 494px;
     margin: auto;
     border: 5px solid black;
 }
@@ -24,7 +24,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
     cursor: pointer;
 }
