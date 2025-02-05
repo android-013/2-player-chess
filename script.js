@@ -85,78 +85,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //pawn
     function handleMove(square) {
-        if (!selectedPiece) {
-            if (square.innerText !== "" && isCorrectTurn(square.innerText)) {
-                selectedPiece = square.innerText;
-                selectedSquare = square;
-                square.style.backgroundColor = "#ffcc00"; // Highlight selected piece
-            }
+    if (!selectedPiece) {
+        if (square.innerText !== "" && isCorrectTurn(square.innerText)) {
+            selectedPiece = square.innerText;
+            selectedSquare = square;
+            square.style.backgroundColor = "#ffcc00"; // Highlight selected piece
+        }
+    } else {
+        if (isSameColor(selectedPiece, square.innerText)) {
+            selectedSquare.style.backgroundColor = ""; // Reset previous square
+            selectedPiece = null;
+            selectedSquare = null;
+            return;
+        }
+
+        if (isValidPawnMove(selectedSquare, square)) {
+            moveHistory.push({ from: selectedSquare.id, to: square.id, captured: square.innerText });
+
+            // Move the piece
+            square.innerText = selectedPiece;
+            selectedSquare.innerText = "";
+            selectedSquare.style.backgroundColor = ""; 
+            selectedPiece = null;
+            selectedSquare = null;
+
+            // Check for promotion
+            checkPawnPromotion(square);
+
+            // Switch turn
+            turn = turn === "white" ? "black" : "white";
+            turnIndicator.innerText = turn === "white" ? "White's Turn" : "Black's Turn";
         } else {
-            // Prevent capturing own pieces
-            if (isSameColor(selectedPiece, square.innerText)) {
-                selectedSquare.style.backgroundColor = ""; // Reset previous square
-                selectedPiece = null;
-                selectedSquare = null;
-                return;
-            }
-    
-            // Check if the move is valid for a pawn
-            if (isValidPawnMove(selectedSquare, square)) {
-                // Save move history for undo
-                moveHistory.push({ from: selectedSquare.id, to: square.id, captured: square.innerText });
-    
-                square.innerText = selectedPiece;
-                selectedSquare.innerText = "";
-                selectedSquare.style.backgroundColor = ""; // Reset previous square
-                selectedPiece = null;
-                selectedSquare = null;
-    
-                // Switch turn
-                turn = turn === "white" ? "black" : "white";
-                turnIndicator.innerText = turn === "white" ? "White's Turn" : "Black's Turn";
-            } else {
-                // Invalid move
-                alert("Invalid move for a pawn!");
-                selectedSquare.style.backgroundColor = ""; // Reset previous square
-                selectedPiece = null;
-                selectedSquare = null;
-            }
+            alert("Invalid move for a pawn!");
+            selectedSquare.style.backgroundColor = ""; 
+            selectedPiece = null;
+            selectedSquare = null;
         }
     }
-    
-    function isValidPawnMove(fromSquare, toSquare) {
-        const fromId = fromSquare.id;
-        const toId = toSquare.id;
-    
-        const fromRank = parseInt(fromId[1]);
-        const toRank = parseInt(toId[1]);
-        const fromFile = fromId[0];
-        const toFile = toId[0];
-    
-        const piece = fromSquare.innerText;
-        const direction = (piece === "♙") ? 1 : -1; // White moves up (+1), Black moves down (-1)
-        const startRank = (piece === "♙") ? 2 : 7;
-    
-        // Regular move forward
-        if (toFile === fromFile && toSquare.innerText === "") {
-            if (toRank === fromRank + direction) {
-                return true;
-            }
-            // Move two squares from start position
-            if (fromRank === startRank && toRank === fromRank + 2 * direction && document.getElementById(fromFile + (fromRank + direction)).innerText === "") {
-                return true;
-            }
+}
+
+function checkPawnPromotion(square) {
+    const piece = square.innerText;
+    const rank = parseInt(square.id[1]);
+
+    // If a white pawn reaches rank 8 or a black pawn reaches rank 1, promote it
+    if ((piece === "♙" && rank === 8) || (piece === "♟" && rank === 1)) {
+        const newPiece = prompt("Promote pawn to (Q/R/B/N): ").toUpperCase();
+        const promotionChoices = { Q: piece === "♙" ? "♕" : "♛", R: piece === "♙" ? "♖" : "♜", B: piece === "♙" ? "♗" : "♝", N: piece === "♙" ? "♘" : "♞" };
+
+        if (promotionChoices[newPiece]) {
+            square.innerText = promotionChoices[newPiece];
+        } else {
+            alert("Invalid choice! Defaulting to Queen.");
+            square.innerText = piece === "♙" ? "♕" : "♛";
         }
-    
-        // Capture move (diagonal)
-        if (Math.abs(toFile.charCodeAt(0) - fromFile.charCodeAt(0)) === 1 && toRank === fromRank + direction) {
-            if (toSquare.innerText !== "" && !isSameColor(piece, toSquare.innerText)) {
-                return true;
-            }
-        }
-    
-        return false;
     }
+}
+
     //pawn
 
     // Undo last move
