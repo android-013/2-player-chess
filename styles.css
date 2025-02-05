@@ -5,7 +5,42 @@ body {
 }
 
 h1 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+#turn-indicator {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.chess-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.board-wrapper {
+    display: flex;
+    position: relative;
+}
+
+.rank-labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.file-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+    width: 484px;
 }
 
 .board {
@@ -14,7 +49,6 @@ h1 {
     grid-template-rows: repeat(8, 60px);
     gap: 2px;
     width: 494px;
-    margin: auto;
     border: 5px solid black;
 }
 
@@ -24,7 +58,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
+    font-size: 32px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -35,4 +69,26 @@ h1 {
 
 .light {
     background-color: #eeeed2;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+#undo {
+    background-color: #ffcc00;
+}
+
+#reset {
+    background-color: #ff5555;
+    color: white;
 }

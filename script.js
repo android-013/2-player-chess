@@ -1,7 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const board = document.querySelector(".board");
+    const turnIndicator = document.getElementById("turn-indicator");
+    const undoButton = document.getElementById("undo");
+    const resetButton = document.getElementById("reset");
+
     let selectedPiece = null;
     let selectedSquare = null;
+    let turn = "white"; // White moves first
+    let moveHistory = [];
 
     const initialSetup = {
         a8: "♜", b8: "♞", c8: "♝", d8: "♛", e8: "♚", f8: "♝", g8: "♞", h8: "♜",
@@ -33,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function handleMove(square) {
         if (!selectedPiece) {
-            if (square.innerText !== "") {
+            if (square.innerText !== "" && isCorrectTurn(square.innerText)) {
                 selectedPiece = square.innerText;
                 selectedSquare = square;
                 square.style.backgroundColor = "#ffcc00"; // Highlight selected piece
@@ -47,11 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            // Save move history for undo
+            moveHistory.push({ from: selectedSquare.id, to: square.id, captured: square.innerText });
+
             square.innerText = selectedPiece;
             selectedSquare.innerText = "";
             selectedSquare.style.backgroundColor = ""; // Reset previous square
             selectedPiece = null;
             selectedSquare = null;
+
+            // Switch turn
+            turn = turn === "white" ? "black" : "white";
+            turnIndicator.innerText = turn === "white" ? "White's Turn" : "Black's Turn";
         }
     }
 
@@ -62,4 +75,27 @@ document.addEventListener("DOMContentLoaded", () => {
         return (whitePieces.includes(piece1) && whitePieces.includes(piece2)) ||
                (blackPieces.includes(piece1) && blackPieces.includes(piece2));
     }
+
+    function isCorrectTurn(piece) {
+        const whitePieces = "♙♘♗♖♕♔";
+        const blackPieces = "♟♞♝♜♛♚";
+        return (turn === "white" && whitePieces.includes(piece)) ||
+               (turn === "black" && blackPieces.includes(piece));
+    }
+
+    // Undo last move
+    undoButton.addEventListener("click", () => {
+        if (moveHistory.length > 0) {
+            const lastMove = moveHistory.pop();
+            document.getElementById(lastMove.from).innerText = document.getElementById(lastMove.to).innerText;
+            document.getElementById(lastMove.to).innerText = lastMove.captured;
+            turn = turn === "white" ? "black" : "white";
+            turnIndicator.innerText = turn === "white" ? "White's Turn" : "Black's Turn";
+        }
+    });
+
+    // Reset the game
+    resetButton.addEventListener("click", () => {
+        location.reload();
+    });
 });

@@ -8,8 +8,17 @@
 </head>
 <body>
     <h1>Chess Game</h1>
-    <div class="board">
-        <!-- The board will be generated dynamically using JavaScript -->
+    <p id="turn-indicator">White's Turn</p>
+    <div class="chess-container">
+        <div class="rank-labels"></div>
+        <div class="board-wrapper">
+            <div class="board"></div>
+        </div>
+        <div class="file-labels"></div>
+    </div>
+    <div class="buttons">
+        <button id="undo">Undo</button>
+        <button id="reset">Reset</button>
     </div>
     <script src="script.js"></script>
 </body>
