@@ -92,3 +92,19 @@ button {
     background-color: #ff5555;
     color: white;
 }
+
+.promotion-menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.promotion-menu button {
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
