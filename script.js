@@ -8,6 +8,131 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedSquare = null;
     let turn = "white"; // White moves first
     let moveHistory = [];
+    let lastMoveFrom = null;
+    let lastMoveTo = null;
+
+    //move system
+    // Move highlights
+    function highlightMoves(square) {
+        clearHighlights();
+        if (!square.innerText || !isCorrectTurn(square.innerText)) return;
+
+        let moves = getValidMoves(square);
+        moves.forEach(({ target, isCapture }) => {
+            target.style.backgroundColor = isCapture ? "#0055aa" : "#66aaff"; // Darker blue for captures
+        });
+    }
+
+    function getValidMoves(square) {
+        let validMoves = [];
+        let piece = square.innerText;
+        let fromId = square.id;
+        
+        document.querySelectorAll(".square").forEach((target) => {
+            if (target !== square && isValidMove(square, target)) {
+                validMoves.push({ target, isCapture: target.innerText !== "" });
+            }
+        });
+        
+        return validMoves;
+    }
+
+    // Clears all highlights
+    function clearHighlights() {
+        document.querySelectorAll(".square").forEach(sq => {
+            sq.style.backgroundColor = "";
+            sq.style.border = "";
+        });
+
+        // Show last move with blue border
+        if (lastMoveFrom && lastMoveTo) {
+            lastMoveFrom.style.border = "3px solid blue";
+            lastMoveTo.style.border = "3px solid blue";
+        }
+    }
+
+    // Move handler with highlights
+    function handleMove(square) {
+        if (!selectedPiece) {
+            if (square.innerText !== "" && isCorrectTurn(square.innerText)) {
+                selectedPiece = square.innerText;
+                selectedSquare = square;
+                square.style.backgroundColor = "#ffcc00"; // Highlight selected piece
+                highlightMoves(square);
+            }
+        } else {
+            if (isSameColor(selectedPiece, square.innerText)) {
+                clearHighlights();
+                selectedPiece = null;
+                selectedSquare = null;
+                return;
+            }
+
+            if (isValidMove(selectedSquare, square)) {
+                moveHistory.push({ from: selectedSquare.id, to: square.id, captured: square.innerText });
+
+                lastMoveFrom = selectedSquare;
+                lastMoveTo = square;
+
+                square.innerText = selectedPiece;
+                selectedSquare.innerText = "";
+                clearHighlights();
+
+                checkPawnPromotion(square);
+
+                // Switch turn
+                turn = turn === "white" ? "black" : "white";
+                turnIndicator.innerText = turn === "white" ? "White's Turn" : "Black's Turn";
+
+                selectedPiece = null;
+                selectedSquare = null;
+            } else {
+                alert("Invalid move!");
+                clearHighlights();
+                selectedPiece = null;
+                selectedSquare = null;
+            }
+        }
+    }
+
+    // move system
+
+    
+    // Shows a selection menu for pawn promotion
+    function checkPawnPromotion(square) {
+        const piece = square.innerText;
+        const rank = parseInt(square.id[1]);
+
+        if ((piece === "♙" && rank === 8) || (piece === "♟" && rank === 1)) {
+            showPromotionMenu(square, piece);
+        }
+    }
+
+    // Creates a popup menu for selecting a piece
+    function showPromotionMenu(square, piece) {
+        const promotionMenu = document.createElement("div");
+        promotionMenu.classList.add("promotion-menu");
+        promotionMenu.innerHTML = `
+            <button onclick="promotePawn('${square.id}', '${piece}', 'Q')">♕</button>
+            <button onclick="promotePawn('${square.id}', '${piece}', 'R')">♖</button>
+            <button onclick="promotePawn('${square.id}', '${piece}', 'B')">♗</button>
+            <button onclick="promotePawn('${square.id}', '${piece}', 'N')">♘</button>
+        `;
+        
+        document.body.appendChild(promotionMenu);
+        promotionMenu.style.top = `${square.offsetTop}px`;
+        promotionMenu.style.left = `${square.offsetLeft}px`;
+    }
+
+    // Handles pawn promotion
+    function promotePawn(squareId, piece, choice) {
+        const square = document.getElementById(squareId);
+        const promotionChoices = { Q: "♕", R: "♖", B: "♗", N: "♘" };
+        
+        square.innerText = promotionChoices[choice] || "♕"; // Default to Queen
+        document.querySelector(".promotion-menu").remove();
+    }
+
 
     const initialSetup = {
         a8: "♜", b8: "♞", c8: "♝", d8: "♛", e8: "♚", f8: "♝", g8: "♞", h8: "♜",
