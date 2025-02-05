@@ -1,6 +1,6 @@
 //board creation
 
-// function createChessBoard() {
+function createChessBoard() {
     const board = document.getElementById("chess-board");
     const files = "abcdefgh";
     
