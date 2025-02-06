@@ -4,28 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Chess Game</h1>
-    <p id="turn-indicator">White's Turn</p>
-    <div class="chess-container">
-        <div class="rank-labels"></div>
-        <div class="board-wrapper">
-            <div class="board"></div>
-        </div>
-        <div class="file-labels"></div>
-    </div>
-    <div class="buttons">
-        <button id="undo">Undo</button>
-        <button id="reset">Reset</button>
-    </div>
+
+    <h1 id="turn-indicator">White's Turn</h1>
+    <div id="chess-board"></div>
+    <button onclick="resetGame()">Reset</button>
+
     <script src="js/board.js"></script>
-    <script src="js/movement.js"></script>
     <script src="js/gameLogic.js"></script>
+    <script src="js/main.js"></script>
+
+    <script src="js/movement.js"></script>
     <script src="js/highlights.js"></script>
     <script src="js/promotion.js"></script>
-    <script src="js/main.js"></script>
 
 </body>
 </html>
