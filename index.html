@@ -7,61 +7,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="chess-container">
-        <div class="turn-indicator">Turn: <span id="turn">White</span></div>
-        <div class="labels-row">
-            <div class="corner"></div>
-            <div class="label">A</div>
-            <div class="label">B</div>
-            <div class="label">C</div>
-            <div class="label">D</div>
-            <div class="label">E</div>
-            <div class="label">F</div>
-            <div class="label">G</div>
-            <div class="label">H</div>
-        </div>
-        <div class="board-container">
-            <div class="board" id="chessBoard">
-                <div class="labels-col">
-                    <div class="label">8</div>
-                    <div class="label">7</div>
-                    <div class="label">6</div>
-                    <div class="label">5</div>
-                    <div class="label">4</div>
-                    <div class="label">3</div>
-                    <div class="label">2</div>
-                    <div class="label">1</div>
-                </div>
-                <div class="grid">
-                    <!-- 64 squares -->
-                    <script>
-                        for (let i = 0; i < 8; i++) {
-                            for (let j = 0; j < 8; j++) {
-                                document.write(`<div class="square ${(i + j) % 2 === 0 ? 'light' : 'dark'}"></div>`);
-                            }
-                        }
-                    </script>
-                </div>
-            </div>
-        </div>
-        <div class="controls">
-            <button id="restart">Restart</button>
-            <button id="undo">Undo</button>
-        </div>
-    </div>
-    <script>
-        function toggleBoardFlip(turn) {
-            setTimeout(() => {
-                document.getElementById('chessBoard').style.transform = turn === 'Black' ? 'rotate(180deg)' : 'rotate(0deg)';
-            }, 100);
-        }
-        
-        document.getElementById('turn').addEventListener('DOMSubtreeModified', function() {
-            toggleBoardFlip(this.textContent);
-        });
-    </script>
-
-    <script src="js/initializePieces.js"></script>
-
+    <div class="chessboard" id="chessboard"></div>
 </body>
 </html>
