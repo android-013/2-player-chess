@@ -17,11 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     square.style.backgroundColor = "#769656"; // Dark square
                 }
-                
+
                 chessboard.appendChild(square);
             }
         }
     }
-    
     createBoard();
 });
