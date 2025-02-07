@@ -21,7 +21,7 @@ h2 {
     margin-bottom: 15px;
 }
 
-.chessboard div {
+.square {
     width: 60px;
     height: 60px;
     display: flex;
@@ -30,12 +30,12 @@ h2 {
     font-size: 24px;
 }
 
-.chessboard div:nth-child(even) {
-    background-color: #769656;
+.light-square {
+    background-color: #eeeed2;
 }
 
-.chessboard div:nth-child(odd) {
-    background-color: #eeeed2;
+.dark-square {
+    background-color: #769656;
 }
 
 .controls {
