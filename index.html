@@ -4,21 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Game</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <h1 id="turn-indicator">White's Turn</h1>
-    <div id="chess-board"></div>
-    <button onclick="resetGame()">Reset</button>
-
-    <script src="js/board.js"></script>
-    <script src="js/gameLogic.js"></script>
-    <script src="js/main.js"></script>
-
-    <script src="js/movement.js"></script>
-    <script src="js/highlights.js"></script>
-    <script src="js/promotion.js"></script>
-
+    <div class="chess-container">
+        <div class="labels-row">
+            <div class="corner"></div>
+            <div class="label">A</div>
+            <div class="label">B</div>
+            <div class="label">C</div>
+            <div class="label">D</div>
+            <div class="label">E</div>
+            <div class="label">F</div>
+            <div class="label">G</div>
+            <div class="label">H</div>
+        </div>
+        <div class="board">
+            <div class="labels-col">
+                <div class="label">8</div>
+                <div class="label">7</div>
+                <div class="label">6</div>
+                <div class="label">5</div>
+                <div class="label">4</div>
+                <div class="label">3</div>
+                <div class="label">2</div>
+                <div class="label">1</div>
+            </div>
+            <div class="grid">
+                <!-- 64 squares -->
+                <script>
+                    for (let i = 0; i < 8; i++) {
+                        for (let j = 0; j < 8; j++) {
+                            document.write(`<div class="square ${(i + j) % 2 === 0 ? 'light' : 'dark'}"></div>`);
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
