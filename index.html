@@ -20,26 +20,28 @@
             <div class="label">G</div>
             <div class="label">H</div>
         </div>
-        <div class="board">
-            <div class="labels-col">
-                <div class="label">8</div>
-                <div class="label">7</div>
-                <div class="label">6</div>
-                <div class="label">5</div>
-                <div class="label">4</div>
-                <div class="label">3</div>
-                <div class="label">2</div>
-                <div class="label">1</div>
-            </div>
-            <div class="grid">
-                <!-- 64 squares -->
-                <script>
-                    for (let i = 0; i < 8; i++) {
-                        for (let j = 0; j < 8; j++) {
-                            document.write(`<div class="square ${(i + j) % 2 === 0 ? 'light' : 'dark'}"></div>`);
+        <div class="board-container">
+            <div class="board" id="chessBoard">
+                <div class="labels-col">
+                    <div class="label">8</div>
+                    <div class="label">7</div>
+                    <div class="label">6</div>
+                    <div class="label">5</div>
+                    <div class="label">4</div>
+                    <div class="label">3</div>
+                    <div class="label">2</div>
+                    <div class="label">1</div>
+                </div>
+                <div class="grid">
+                    <!-- 64 squares -->
+                    <script>
+                        for (let i = 0; i < 8; i++) {
+                            for (let j = 0; j < 8; j++) {
+                                document.write(`<div class="square ${(i + j) % 2 === 0 ? 'light' : 'dark'}"></div>`);
+                            }
                         }
-                    }
-                </script>
+                    </script>
+                </div>
             </div>
         </div>
         <div class="controls">
@@ -47,5 +49,19 @@
             <button id="undo">Undo</button>
         </div>
     </div>
+    <script>
+        function toggleBoardFlip(turn) {
+            setTimeout(() => {
+                document.getElementById('chessBoard').style.transform = turn === 'Black' ? 'rotate(180deg)' : 'rotate(0deg)';
+            }, 100);
+        }
+        
+        document.getElementById('turn').addEventListener('DOMSubtreeModified', function() {
+            toggleBoardFlip(this.textContent);
+        });
+    </script>
+
+    <script src="js/initializePieces.js"></script>
+
 </body>
 </html>
