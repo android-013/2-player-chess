@@ -1,21 +1,29 @@
 body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
     background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
 }
 
 .chessboard {
     display: grid;
-    grid-template-columns: repeat(8, 80px);
-    grid-template-rows: repeat(8, 80px);
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
     border: 5px solid black;
+    margin-bottom: 15px;
 }
 
 .chessboard div {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,4 +36,23 @@ body {
 
 .chessboard div:nth-child(odd) {
     background-color: #eeeed2;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #555;
 }
