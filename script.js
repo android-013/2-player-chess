@@ -176,7 +176,7 @@ function renderStatus() {
   if (state.gameOver) {
     elEndPill.textContent = state.result || "Game Over";
   } else {
-    elEndPill.textContent = "Game Over";
+    elEndPill.textContent = "";
   }
 }
 
@@ -250,14 +250,15 @@ function renderBoard() {
       }
 
       // Small coordinate hint in corners (minimal)
-      const showFile = (!flipped && r === 7) || (flipped && r === 0);
-      const showRank = (!flipped && c === 0) || (flipped && c === 7);
+      // Use UI coordinates so the hints follow board rotation correctly.
+      const showFile = (!flipped && uiR === 7) || (flipped && uiR === 0);
+      const showRank = (!flipped && uiC === 0) || (flipped && uiC === 7);
       if (showFile || showRank) {
         const coord = document.createElement("div");
         coord.className = "coord";
-        const file = FILES[c];
-        const rank = String(8 - r);
-        coord.textContent = (showRank ? rank : "") + (showFile ? file : "");
+        const file = FILES[uiC];
+        const rank = String(8 - uiR);
+        coord.textContent = (showFile ? file : "") + (showRank ? rank : "");
         sq.appendChild(coord);
       }
 
