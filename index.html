@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chess (Two Players)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <div class="title">Chess</div>
+        <div class="subtitle">Two-player (local)</div>
+      </div>
+
+      <div class="status">
+        <div class="pill" id="turnPill">Turn: White</div>
+        <div class="pill warn" id="checkPill" hidden>Check</div>
+        <div class="pill danger" id="endPill" hidden>Game Over</div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="boardWrap">
+        <div class="board" id="board" aria-label="Chess board"></div>
+
+        <div class="controls">
+          <button class="btn" id="undoBtn" type="button">Undo</button>
+          <button class="btn" id="resetBtn" type="button">Reset</button>
+          <button class="btn" id="flipBtn" type="button">Flip Board</button>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <div class="panelCard">
+          <div class="panelTitle">Move List</div>
+          <div class="moves" id="moves"></div>
+        </div>
+
+        <div class="panelCard">
+          <div class="panelTitle">Captured</div>
+          <div class="captured">
+            <div>
+              <div class="capLabel">White captured</div>
+              <div class="capRow" id="capWhite"></div>
+            </div>
+            <div>
+              <div class="capLabel">Black captured</div>
+              <div class="capRow" id="capBlack"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panelCard hint">
+          Click a piece, then click a highlighted destination.
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Promotion Modal -->
+  <div class="modal" id="promoModal" hidden>
+    <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="promoTitle">
+      <div class="modalTitle" id="promoTitle">Choose promotion</div>
+      <div class="modalActions" id="promoActions"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
